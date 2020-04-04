@@ -1,0 +1,11 @@
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Debug\netcoreapp3.0\instrumentacja.exe
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Debug\netcoreapp3.0\instrumentacja.deps.json
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Debug\netcoreapp3.0\instrumentacja.runtimeconfig.json
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Debug\netcoreapp3.0\instrumentacja.runtimeconfig.dev.json
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Debug\netcoreapp3.0\instrumentacja.dll
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Debug\netcoreapp3.0\instrumentacja.pdb
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Debug\netcoreapp3.0\instrumentacja.csprojAssemblyReference.cache
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Debug\netcoreapp3.0\instrumentacja.AssemblyInfoInputs.cache
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Debug\netcoreapp3.0\instrumentacja.AssemblyInfo.cs
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Debug\netcoreapp3.0\instrumentacja.dll
+C:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Debug\netcoreapp3.0\instrumentacja.pdb
