@@ -1,0 +1,10 @@
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Release\netcoreapp3.0\instrumentacja.exe
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Release\netcoreapp3.0\instrumentacja.deps.json
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Release\netcoreapp3.0\instrumentacja.runtimeconfig.json
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Release\netcoreapp3.0\instrumentacja.runtimeconfig.dev.json
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Release\netcoreapp3.0\instrumentacja.dll
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\bin\Release\netcoreapp3.0\instrumentacja.pdb
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Release\netcoreapp3.0\instrumentacja.AssemblyInfoInputs.cache
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Release\netcoreapp3.0\instrumentacja.AssemblyInfo.cs
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Release\netcoreapp3.0\instrumentacja.dll
+c:\Users\gmatk\source\repos\instrumentacja\instrumentacja\obj\Release\netcoreapp3.0\instrumentacja.pdb

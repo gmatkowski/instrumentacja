@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.IO;
+using System.Threading;
 
 namespace instrumentacja
 {
@@ -13,19 +13,46 @@ namespace instrumentacja
         const int maxTries = 10;
         const int tableWidth = 150;
 
-        const int step = 10000;
-        const int multiplier = 5;
+        const int step_max = 26843545;
+        const int mmultiplier_max = 10;
+
+        const int step_avg = 50000;
+        const int multiplier_avg = 10;
 
 
         static void Main(string[] args)
         {
 
-            //Console.SetWindowSize(160, 40);
+            Console.SetWindowSize(160, 40);
 
-            PrintRow("Size", "tLMaxI", "tLMaxT", "tLAvgI", "tLAvgT", "tBMaxI", "tBMaxT", "tBAvgI", "tBAvgT");
+            Console.WriteLine("Max:");
+            PrintRow("Size", "tLMaxI", "tLMaxT", "tBMaxI", "tBMaxT");
+            PrintLine();
+            for (int ArraySize = step_max; ArraySize <= step_max * mmultiplier_max; ArraySize += step_max)
+            {
+                TestVector = new int[ArraySize];
+                for (int i = 0; i < TestVector.Length; ++i)
+                {
+                    TestVector[i] = i;
+                }
+
+                long[] linearTim = LinearTim();
+                long[] binaryTim = BinaryTim();
+
+                string linearMaxInstr = LinearMaxInstr();
+                string linearMaxTim = showTime(getTime(linearTim, "max") * 1000, "F4");
+
+                string binaryMaxInstr = BinaryMaxInstr();
+                string binaryMaxTim = showTime(getTime(binaryTim, "max") * 1000000, "F4", "μs");
+
+                PrintRow(ArraySize.ToString(), linearMaxInstr, linearMaxTim, binaryMaxInstr, binaryMaxTim);
+            }
             PrintLine();
 
-            for (int ArraySize = step; ArraySize <= step * multiplier; ArraySize += step)
+            Console.WriteLine("Average:");
+            PrintRow("Size", "tLAvgI", "tLAvgT", "tBAvgI", "tBAvgT");
+            PrintLine();
+            for (int ArraySize = step_avg; ArraySize <= step_avg * multiplier_avg; ArraySize += step_avg)
             {
                 TestVector = new int[ArraySize];
                 for (int i = 0; i < TestVector.Length; ++i) { 
@@ -33,25 +60,17 @@ namespace instrumentacja
                 }
 
                 long[] linearTim = LinearTim();
-
-                string arraySize = ArraySize.ToString();
-                string linearMaxInstr = LinearMaxInstr();
-                string linearMaxTim = showTime(getTime(linearTim, "max"));
-
-                string linearAvgInstr = LinearAvgInstr();
-                string linearAvgTim = showTime(getTime(linearTim, "average"));
-
                 long[] binaryTim = BinaryTim();
 
-                string binaryMaxInstr = BinaryMaxInstr();
-                string binaryMaxTim = showTime(getTime(binaryTim, "max"), "F8");
+                string linearAvgInstr = LinearAvgInstr();
+                string linearAvgTim = showTime(getTime(linearTim, "average") * 1000, "F4");
 
                 string binaryAvgInstr = BinaryAvgInstr();
-                string binaryAvgTim = showTime(getTime(binaryTim, "average"), "F8");
+                string binaryAvgTim = showTime(getTime(binaryTim, "average") * 1000000, "F4", "μs");
 
-                PrintRow(arraySize, linearMaxInstr, linearMaxTim, linearAvgInstr, linearAvgTim, binaryMaxInstr, binaryMaxTim, binaryAvgInstr, binaryAvgTim);
-               
+                PrintRow(ArraySize.ToString(), linearAvgInstr, linearAvgTim, binaryAvgInstr, binaryAvgTim);
             }
+      
             PrintLine();
 
             Console.WriteLine("Done");
@@ -87,12 +106,11 @@ namespace instrumentacja
         static string BinaryMaxInstr()
         {
             OpComparisonEQ = 0;
-            bool Present = IsPresent_BinaryInstr(TestVector, TestVector[0]);
+            bool Present = IsPresent_BinaryInstr(TestVector, TestVector.Length);
 
             return OpComparisonEQ.ToString();
         }
 
-        //@TODO
         static bool IsPresent_BinaryInstr(int[] Vector, int Number)
         {
             int Left = 0, Right = Vector.Length - 1, Middle;
@@ -114,17 +132,19 @@ namespace instrumentacja
         {
             long IterationElapsedTime;
             long[] results = new long[maxTries];
+            long StartingTime;
+            long EndingTime;
+            int length = TestVector.Length - 1;
 
             for (int n = 0; n < (maxTries); ++n)
             {
-                long StartingTime = Stopwatch.GetTimestamp();
-                bool Present = IsPresent_BinaryTim(TestVector, TestVector[0]);
-                long EndingTime = Stopwatch.GetTimestamp();
+                StartingTime = Stopwatch.GetTimestamp();
+                IsPresent_BinaryTim(TestVector, length);
+                EndingTime = Stopwatch.GetTimestamp();
 
                 IterationElapsedTime = EndingTime - StartingTime;
 
                 results[n] = IterationElapsedTime;
-
             }
 
             return results;
@@ -200,11 +220,14 @@ namespace instrumentacja
         {
             switch (mode)
             {
+                case "min":
+                    return results.Min();
+                case "max":
+                    return results.Max();
                 case "average":
                     return results.Average();
-                    break;
                 default:
-                    return results.Max();
+                    return 0;
             }
         }
 
@@ -213,9 +236,9 @@ namespace instrumentacja
             return time * (1.0 / (NIter * Stopwatch.Frequency));
         }
 
-        static string showTime(double time, string precision = "F7")
+        static string showTime(double time, string precision = "F4", string unit = "ms")
         {
-            return parseTime(time).ToString(precision) + " ms";
+            return parseTime(time).ToString(precision) + " " + unit;
         }
 
         static void PrintLine()
